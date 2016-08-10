@@ -8,14 +8,13 @@ import javax.persistence.Converter
 class EncryptedTextConverter : AttributeConverter<String, String> {
 
     override fun convertToDatabaseColumn(text: String): String? {
-        println(System.getProperties())
-        val encryptor = GlobalApplicationContext.context?.getBean(TextEncryptor::class.java)
+        val encryptor = SpringApplicationContext.getBean(TextEncryptor::class.java)
 
         return encryptor?.encrypt(text)
     }
 
     override fun convertToEntityAttribute(encryptedText: String): String? {
-        val encryptor = GlobalApplicationContext.context?.getBean(TextEncryptor::class.java)
+        val encryptor = SpringApplicationContext.getBean(TextEncryptor::class.java)
 
         return encryptor?.decrypt(encryptedText)
     }

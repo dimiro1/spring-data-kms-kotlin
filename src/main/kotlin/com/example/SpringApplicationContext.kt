@@ -11,12 +11,15 @@ import org.springframework.stereotype.Component
  * This is a mess, its is used only to get the encryption bean in the EncryptedTextConverter.
  */
 @Component
-open class GlobalApplicationContext : ApplicationContextAware {
+open class SpringApplicationContext : ApplicationContextAware {
+
     override fun setApplicationContext(applicationContext: ApplicationContext?) {
         context = applicationContext
     }
 
     companion object {
-        var context: ApplicationContext? = null
+        private var context: ApplicationContext? = null
+
+        fun <T> getBean(clazz: Class<T>): T? = context?.getBean(clazz)
     }
 }
